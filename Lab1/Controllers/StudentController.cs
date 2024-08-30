@@ -48,10 +48,7 @@ namespace Lab1.Controllers
         [HttpPost]
         public IActionResult Create(Student student, IFormFile avatarFile)
         {
-			if (ModelState.IsValid)
-            {
-                
-				if (avatarFile != null && avatarFile.Length > 0)
+		if (avatarFile != null && avatarFile.Length > 0)
                 {
                     var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/avatars", avatarFile.FileName);
                     using (var stream = new FileStream(filePath, FileMode.Create))
@@ -67,8 +64,6 @@ namespace Lab1.Controllers
                 student.Id = listStudents.Count + 1;
                 listStudents.Add(student);
                 return View("Index", listStudents);
-            }
-            return View(student);
         }
     }
 }
