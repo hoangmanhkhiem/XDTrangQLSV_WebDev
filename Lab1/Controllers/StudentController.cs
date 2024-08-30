@@ -1,18 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Lab1.Models;
 
 namespace Lab1.Controllers
 {
-    public class StudentController : Controller
+    public static class Database
     {
-        private List<Student> listStudents = new List<Student>();
-
-        public StudentController()
+        public static List<Student> listStudents = new List<Student>
         {
-            // Tạo danh sách sinh viên với 4 dữ liệu mẫu
-            listStudents = new List<Student>
-            {
                 new Student { Id = 1, Name = "Nguyen Van A", Branch = Branchs.IT, Gender = Gender.Male,
                     IsRegular = true, Address = "A1-2018", Email = "nguyenvana@gmail.com", Avatar = "/avatars/default.png"},
                 new Student { Id = 2, Name = "Tran Thi B", Branch = Branchs.BE, Gender = Gender.Male,
@@ -21,12 +16,14 @@ namespace Lab1.Controllers
                     IsRegular = true, Address = "A3-2018", Email = "tranvanc@gmail.com", Avatar = "/avatars/default.png"},
                 new Student { Id = 4, Name = "Hoang Thi D", Branch = Branchs.EE, Gender = Gender.Male,
                     IsRegular = true, Address="A4-2018", Email ="hoangthid@gmail.com", Avatar = "/avatars/default.png"}
-            };
-        }
+        };
+    }
+    public class StudentController : Controller
+    {
 
         public IActionResult Index()
         {
-            return View(listStudents);
+            return View(Database.listStudents);
         }
 
         [HttpGet]
@@ -61,9 +58,9 @@ namespace Lab1.Controllers
                 {
                     student.Avatar = "/avatars/default.png";
                 }
-                student.Id = listStudents.Count + 1;
-                listStudents.Add(student);
-                return View("Index", listStudents);
+                student.Id = Database.listStudents.Count + 1;
+                Database.listStudents.Add(student);
+                return View("Index", Database.listStudents);
         }
     }
 }
